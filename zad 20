@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct wezel{
+	struct wezel *prev;
+	int key;
+	struct wezel *next;
+	
+};
+void addToList(struct wezel *wsk, int value);
+int main(void){
+	//struct wezel *p = (struct wezel*) malloc(sizeof(struct wezel));
+	struct wezel *wlst = (struct wezel*) malloc(sizeof(struct wezel));
+	wlst->key=3;
+	wlst->prev = (struct wezel *) malloc(sizeof(struct wezel));
+	wlst->prev->key=8;
+	wlst->prev->prev=NULL;
+	wlst->prev->next= wlst;
+	wlst->next = (struct wezel*) malloc(sizeof(struct wezel*));
+	wlst->next->key=5;
+	wlst->next->prev = wlst;
+	wlst->next->next = (struct wezel*) malloc(sizeof(struct wezel*));
+	wlst->next->next->key=6;
+	wlst->next->next->next=NULL;
+	wlst->next->next->prev= wlst->next->next;
+	addToList(wlst,3);
+	return 0;
+}
+void addToList(struct wezel *wsk, int value){
+	struct wezel *nowy = (struct wezel *) malloc(sizeof(struct wezel));
+	nowy->prev = wsk->prev;
+	nowy->next = wsk;
+	wsk->prev->next = nowy;
+	wsk->prev = nowy;
+	nowy->key=value;
+}
