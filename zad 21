@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct wezel{
+	struct wezel *before;
+	int key;
+	struct wezel *next;
+};
+int main(void){
+	struct wezel *wlst = (struct wezel *) malloc(sizeof(struct wezel));
+	wlst->key=7;
+	wlst->before = (struct wezel*) malloc(sizeof(struct wezel));
+	wlst->before->key=4;
+	wlst->before->before = (struct wezel *) malloc(sizeof(struct wezel));
+	wlst->before->before->key=2;
+	wlst->before->next = wlst;
+	wlst->next= wlst->before->before;
+	wlst->before->before->before = wlst;
+	wlst->before->before->next = wlst->before->before;
+	printf("struktura 1: %d\n",wlst->key);
+	printf("struktura 2: %d\n",wlst->next->key);
+	printf("struktura 3: %d\n",wlst->before->key);
+	free(wlst->before->before);
+	free(wlst->before);
+	free(wlst);
+	return 0;
+}
