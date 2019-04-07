@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <string.h>
+#define N 21
+typedef struct towar{
+	unsigned int id;
+	char nazwa[N];
+	float cena;
+} TOWAR; 
+int main(int argc, char *argv[]){
+	TOWAR produkt = {.nazwa = "pralka", .cena = 899.99, .id = 1};
+	TOWAR kopia_produkt, kopia_produkt_dwa;
+	FILE *fp, *wp;
+	if((fp = fopen(argv[1],"r+b")) == NULL ||	(wp = fopen(argv[2],"r+b")) == NULL ){
+		puts("Nie mozna otworzyc takiego pliku");
+		exit(EXIT_FAILURE);
+	}
+	fwrite(&produkt,sizeof(produkt),1,fp); // zapis binarny do pliku
+	fprintf(wp,"%u %s %f", produkt.id, produkt.nazwa,produkt.cena); // zapis tekstowy do pliku!
+	rewind(fp);rewind(wp);
+	fread(&kopia_produkt,sizeof(produkt),1,fp);
+	fscanf(wp,"%u %s %f",&kopia_produkt_dwa.id,&kopia_produkt_dwa.nazwa,&kopia_produkt_dwa.cena);
+	fwrite(stdout,sizeof(produkt),1,fp);
+	//printf("Plik 1 binarny: id: %u nazwa: %s cena %.2f zl",kopia_produkt.id, kopia_produkt.nazwa, kopia_produkt.cena);
+	printf("\nPlik 2 tekstowy: id: %u nazwa: %s cena %.2f zl",kopia_produkt_dwa.id, kopia_produkt_dwa.nazwa, kopia_produkt_dwa.cena);
+	if(fclose(fp) != 0 || fclose(wp) != 0){
+		puts("Nie mozna zamknac pliku!");
+		exit(EXIT_FAILURE);
+	}
+	return 0;
+}
