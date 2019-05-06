@@ -1,0 +1,38 @@
+#include <stdio.h>
+/*Napisz funkcję liczba_podciagow(), która pobiera dwa wskaźniki łańcuchowe. Funkcja powinna zliczać i
+zwracać liczbę wystąpień drugiego łańcucha w łańcuchu pierwszym. Uwaga: funkcja powinna zliczać tylko
+wystąpienia łańcuchów składających się z różnych znaków (różnych co do pozycji) tzn. wywołanie funkcji
+liczba_podciagow("mamama","mam") powinno zwracać 1 a nie 2.
+*/
+int check(char *a, char *b);
+int main(void){
+	char *nazwa1 = "mammmmmama";
+	char *nazwa2 = "mama";
+	int x = check(nazwa1,nazwa2);
+	printf("dasdas%d",x);
+	return 0;
+}
+int check(char *a, char *b){
+	char *p = a;
+	char *q = b;
+	int counter =0;
+	while(*p!='\0'){
+		q=b;
+		while(*p != *q){
+			p++;
+			if(*p == '\0')
+				return counter;
+		}
+		while(*p == *q){
+			if(*p == '\0'){
+				return counter;
+			}
+			p++;
+			q++;
+		}
+		if(*q == '\0'){
+			counter++;
+		}
+	}
+	return counter;
+}
