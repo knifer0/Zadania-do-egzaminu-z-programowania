@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+int strend(char *a, char *b){
+	while(*a==*b && (*b != '\0' || *a != '\0')){ // jak juz dojdzie do '\0' nie moze go przekroczyc
+		printf("%c %c\n",*a,*b);
+		a++;b++;
+	}
+	if((*a=='\0' && *b=='\0'))
+		return 1;
+	else
+	
+		return 0;
+}
+
+int main ()
+{
+	char a[40] = {'\0'};
+	char b[40] = {'\0'};
+	printf("Dawaj pierwszy napis: ");
+	gets(a);
+	printf("Dawaj drugi napis: ");
+	gets(b);
+	char *p = a;
+	char *q = b;
+	printf("%d\n",strend(p,q));
+	return 0;
+}
