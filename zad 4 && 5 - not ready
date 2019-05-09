@@ -1,0 +1,83 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define N 30
+#define MAX 10
+// program w pelni gotowy, przerobiony juz do rzeczywistej obslugi (np mozliwosc wproawdzenia mniej niz 10 struktur)
+typedef struct osoba{
+    char *imie;
+    char *nazwisko;
+    char *miejscowosc;
+    int wiek;
+} OSOBA;
+void inicjalizacja_OSOBA(OSOBA *node, char *t_imie, char *t_nazwisko, char *t_miejsce, int w); // prototyp funkcji
+void wyswietl(OSOBA *node);
+void dealokacja_OSOBA(OSOBA *node);
+int main(void){
+    OSOBA dane[MAX];
+    char tab_imie[N+1];
+    char tab_nazwisko[N+1];
+    char tab_miejscowosc[N+1];
+    int i = 0, age, k;
+    while (i < MAX){
+        printf("Podaj imie: ");
+        gets(tab_imie);
+        if(tab_imie[0] == '\0')
+            break;
+        printf("Podaj nazwisko: ");
+        gets(tab_nazwisko);
+        if(tab_nazwisko[0] == '\0')
+            break;
+        printf("Podaj miejscowosc: ");
+        gets(tab_miejscowosc);
+        if(tab_miejscowosc[0] == '\0')
+            break;
+        printf("Podaj wiek: ");
+        if((scanf("%d", &age))!=1)
+            break;
+        while(getchar() != '\n'); // czysci wiersz
+        inicjalizacja_OSOBA(&dane[i], tab_imie, tab_nazwisko, tab_miejscowosc, age);
+        i++;
+    }
+    printf("Podaj, ktory rekord tablicy dane chcesz wyswietlic.\n");
+    printf("Wyjscie poza indeks tablicy lub wpisanie znaku nie bedacego liczba konczy wypisywanie!");
+    printf("%d",i);
+    while (scanf("%d", &k) == 1 && k >= 0 && k < MAX && k<=i){ // jezeli k jest mniejsze od i dopisalem bo inaczej failure
+        printf("Rekord %d\n", k);
+        printf("--------------------------\n");
+        wyswietl(&dane[k]);
+        printf("--------------------------\n");
+        while(getchar() != '\n');
+        printf("Podaj ktory rekord tablicy dane chcesz wyswietlic.\n");
+        printf("Wyjscie poza idkeks tablicy lub wpisanie znku nie bedacego liczba koncz wypisywanie!\n");
+    }
+    int counter=i;// zapamietac ile jest struktur
+    printf("%d",counter);
+    for(int i = 0; i <counter-2 ; i++) // zmienilem na counter, zeby czyscilo tyle ile faktycznie mamy struktur, jesli mamy mniej niz 10
+        dealokacja_OSOBA(&dane[i]);
+    printf("KONIEC!");
+    for(int i=0; i<10;i++)
+        wyswietl(&dane[i]);
+    return 0;
+}
+
+void inicjalizacja_OSOBA(OSOBA *node, char *t_imie, char *t_nazwisko, char *t_miejsce, int w){
+    node->imie = (char*) malloc(strlen(t_imie)+1);
+    strcpy(node->imie,t_imie);
+    node->nazwisko = (char*) malloc(strlen(t_nazwisko)+1);
+    strcpy(node->nazwisko,t_nazwisko);
+    node->miejscowosc = (char*) malloc(strlen(t_miejsce)+1);
+    strcpy(node->miejscowosc,t_miejsce);
+    node->wiek = w;
+}
+
+void wyswietl(OSOBA *node){
+    if(node==NULL)
+        puts("nic nie ma ..");
+    else
+        printf("%s %s %s %d\n",node->imie,node->nazwisko,node->miejscowosc,node->wiek);
+}
+
+void dealokacja_OSOBA(OSOBA *node){
+    free(node);
+}
