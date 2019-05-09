@@ -9,22 +9,16 @@ liczba_podciagow("mamama","mam") powinno zwracać 1 a nie 2.
 // Jeśli w łańcuchu przeszukiwanym znajduje się więcej niż jedno wystąpienie poszukiwanego ciągu znaków to funkcja zwróci adres na pierwsze wystąpienie.
 
 int check(char *a, char *b);
+int check2(char *a, char *b);
 int main(void){
 	char *nazwa1 = "mamama";
 	char *nazwa2 = "mam";
-	int x = check(nazwa1,nazwa2);
-	printf("%d\n",x);
-
-	int counter=0;
-	char *ch= nazwa1;
+	printf("%d\n",check(nazwa1,nazwa2));
     //2 SPOSOB DO ZLICZANIA ZA POMOCA FUNKCJI STRSTR //
-	while((ch= strstr(ch,nazwa2))){
-        counter++;
-        ch += strlen(nazwa2);//str zwraca wskaznik do poczatku, wiec jak juz znajdzie przesuwam ja o dlugosc nazwa2
-    }
-    printf("%d",counter);
+    printf("%d",check2(nazwa1,nazwa2));
 	return 0;
 }
+
 int check(char *a, char *b){
 	char *q = b;
 	int counter =0;
@@ -49,4 +43,14 @@ int check(char *a, char *b){
 		}
 	}
 	return counter;
+}
+
+int check2(char *a, char *b){
+    int counter =0;
+    char *ch = a;
+    while((ch= strstr(ch,b))){
+        counter++;
+        ch += strlen(b);//str zwraca wskaznik do poczatku, wiec jak juz znajdzie przesuwam ja o dlugosc nazwa2
+    }
+    return counter;
 }
