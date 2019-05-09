@@ -42,9 +42,7 @@ void print(int **t, int ilosc){
 		temp--;
 	}
 }
-
 void print2(int **t, int ilosc){
-	
 	int temp=1;
 	for(int i=ilosc-1; i>=0; i--){
 		for(int j=0; j<temp;j++)
