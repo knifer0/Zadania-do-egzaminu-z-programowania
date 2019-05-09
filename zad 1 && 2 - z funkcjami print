@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define N 4
+int **alokuj(int ile);
+void wypelnij_wyswietl(int **t, int ile);
+void print(int **t, int ilosc);
+void print2(int **t, int ilosc);
+int main(void){
+	int **tablica = alokuj(N);
+	wypelnij_wyswietl(tablica,N);
+	return 0;
+}
+int **alokuj(int ile){
+	int temp =ile;
+	int **t = (int **) malloc(ile*sizeof(int *));
+	for(int i=0; i<ile; i++){
+		t[i] = (int *) malloc(temp--*sizeof(int));
+	}
+	return t;
+}
+void wypelnij_wyswietl(int **t, int ile){
+	int temp = ile;
+	for(int i=0; i<ile; i++){
+		for(int j=0; j<temp; j++){
+		*(*(t+i)+j) = j+1;
+			//printf("%d ",*(*(t+i)+j));
+		}
+			
+		temp--;
+		//puts("");
+	}
+	print(t,ile);
+	puts("");
+	print2(t,ile);
+}
+void print(int **t, int ilosc){
+	int temp = ilosc;
+	for(int i=0; i<ilosc; i++){
+		for(int j=0; j<temp; j++)
+			printf("%d ",t[i][j]);
+		puts("");
+		temp--;
+	}
+}
+
+void print2(int **t, int ilosc){
+	
+	int temp=1;
+	for(int i=ilosc-1; i>=0; i--){
+		for(int j=0; j<temp;j++)
+			printf("%d ",t[i][j]);
+		puts("");
+		temp++;
+	}
+}
