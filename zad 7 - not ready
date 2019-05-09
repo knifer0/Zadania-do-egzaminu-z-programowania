@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <ctype.h> // do isalpha
+#define W 8
+#define K 12
+void uzupelnij_wyswietl(char (*t)[K]); // <!-- to samo co t[][K], UWAGA!, **t nie bedzie dzialac, bo tablica w main juz jest utworzona jako dwuwymiarowa, 
+			   						  // po 2 *t[K} tez nie bedzie dzialac bo priorytet operatorow
+int main (void){
+	srand(time(NULL));
+	char tablica[W][K];
+	uzupelnij_wyswietl(tablica);
+return 0;
+}
+void uzupelnij_wyswietl(char (*t)[K]){
+	for(int i=0; i<W; i++){
+		for(int j=0; j<K;j++){
+			while(isalpha(t[i][j] ==0))
+				t[i][j] = rand()%58+65; // bedzie dawac wartosci od 65 do 90 bo wroci reszte z dzielenia przez 26 od 0 do 25 +65
+														// bedize dawac wartosci od 97 do 122 - male litery
+			printf("%c ",t[i][j]);
+		}
+		puts("");
+	}
+}
