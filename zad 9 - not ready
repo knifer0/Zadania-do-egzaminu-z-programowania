@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define LIMIT_LINII 500
+/*Napisz program, który otwiera do odczytu plik lec.txt, który zawiera 26 przykładowych wierszy tekstu różnej długości.
+Program powinien wywoływać funkcję alokuj_tab_str(), która pobiera wskaźnik plikowy. Funkcja
+alokuj_tab_str() powinna alokować pamięć dla tablicy 26 wierszy znaków (char) o długości o jeden większej
+od liczby znaków w kolejnych wierszach pliku. W tym celu funkcja alokuj_tab_str() powinna zliczać liczbę
+znaków w wierszu (bez znaku nowej linii) i alokować odpowiedni blok pamięci. Następnie funkcja powinna
+odczytywać kolejne wiersze pliku znak po znaku i zapisywać je w odpowiednich wierszach tablicy, dodając po
+ostatnim znaku odczytanego wiersza znak NULL (\0). Funkcja alokuj_tab_str() powinna zwracać wskaźnik do
+tak stworzonej tablicy łańcuchów. W dalszej kolejności program powinien wypisywać kolejne wiersze tablicy
+używając funkcji puts() i dealokować przydzieloną pamięć.*/
+char **alokuj_tab_str(FILE *wsk);
+int main() {
+    FILE *fp;
+    if((fp = fopen("lec.txt","r")) == NULL){
+        puts("Nie mozna otworzyc pliku");
+        exit(EXIT_FAILURE);
+    }
+    char **t = alokuj_tab_str(fp);
+    for(int i=0; i<26; i++)
+        puts(t[i]);
+
+    if(fclose(fp) !=0){
+        puts("Nie mozna zamknac pliku");
+        exit(EXIT_FAILURE);
+    }
+    return 0;
+}
+char **alokuj_tab_str(FILE *wsk){
+    char znak;
+    int counter =0;
+    char *temp[LIMIT_LINII]; //temp musi byc tablica nie lancuchem do fgetsa!!!!
+    char **tablica = (char **) malloc(26*sizeof(char*));
+    for(int i=0; i<26; i++) {
+        counter =0;
+        while((znak = fgetc(wsk)) != ' '){
+            temp[counter] = znak;
+            counter++;
+            if(znak == EOF)
+                break;
+        }
+        tablica[i] = (char *) malloc((strlen(temp))+1);
+        strcpy(tablica[i],temp);
+        tablica[i][strlen(temp)] ='\0';
+        printf("%s\n",temp);
+        //fgets(temp, LIMIT_LINII-1,wsk); // tu pobierze wraz z enterem np aaa - 4 znaki
+       // for(int i=0; i<LIMIT_LINII && temp[i] != '\0'; i++)
+           // if(temp[i] == '\n');
+             //   temp[i] = '\0'; // usuwam enter z wczytanego wiersza
+       // tablica[i] = (char *) malloc(strlen(temp)+1);
+       // strcpy(tablica[i],temp);
+     //   tablica[i][strlen(temp)] = '\0';
+    }
+    return tablica;
+}
