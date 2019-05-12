@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <ctype.h> // do isalpha
+#define W 8
+#define K 12
+void uzupelnij_wyswietl(char (*t)[K]); // <!-- to samo co t[][K], UWAGA!, **t nie bedzie dzialac, bo tablica w main juz jest utworzona jako dwuwymiarowa,
+// po 2 *t[K} tez nie bedzie dzialac bo priorytet operatorow
+int main (void){
+    srand(time(NULL));
+    char tablica[W][K];
+    uzupelnij_wyswietl(tablica);
+    return 0;
+}
+void uzupelnij_wyswietl(char (*t)[K]) {
+    for (int i = 0; i < W; i++) {
+        for (int j = 0; j < K; j++) {
+            while (isalpha(t[i][j]) == 0)
+                t[i][j] = rand() % 58 +65;
+            printf("%c ", t[i][j]);
+        }
+         puts("");
+    }
+}
+
+//rand%()26+65 // wylosuje kody ASCII z zakresu 65-90
+// rand()%26+97 // wylosuje kosy ASCII z zakresu 97-122
+// rand()%58+65 // wylosuje kody ASCII z zakresu 65-122 (liter alfabetu 26 +26) + 6 znakow przestankowych
