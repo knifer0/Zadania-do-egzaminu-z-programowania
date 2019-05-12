@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+int moja_atoi(char *t);
+int main(void){
+	printf("%d",moja_atoi("2asb"));
+	return 0;
+}
+int moja_atoi(char *t){
+	int znak =1;
+	int sum =0;
+	int licznik = 10;
+    while(*t ==' ')
+        t++; // tym warunkiem pomijam poczatkowe spacje np przy wywolaniu " 23"
+	if(*t == '-'){
+		znak = -znak;
+		t++;
+	}
+	while(*t >='0' && *t <='9'){
+		sum = sum*licznik + (*t - '0');
+		//printf("Dodaje %d\n",(*t-'0'));
+		t++;
+	}
+	sum*=znak;
+	return sum;
+}
